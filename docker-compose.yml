@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: expensetracker-mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo_network
+
+  backend:
+    build:
+      context: ./backend  # Pointing to the backend folder
+    container_name: expensetracker-backend
+    ports:
+      - "8099:8099"
+    depends_on:
+      - mongo
+    networks:
+      - mongo_network
+
+  frontend:
+    build:
+      context: ./frontend  # Pointing to the frontend folder
+    container_name: expensetracker-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - mongo_network
+
+networks:
+  mongo_network:
+    driver: bridge
