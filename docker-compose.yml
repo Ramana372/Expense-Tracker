@@ -1,127 +1,67 @@
-# version: '3.8'
-
-# services:
-#   mongo:
-#     image: mongo:latest
-#     container_name: expensetracker-mongo
-#     ports:
-#       - "27017:27017"
-#     networks:
-#       - appnet
-
-#   mongo-express:
-#     image: mongo-express
-#     container_name: expensetracker-mongo-express
-#     ports:
-#       - "8081:8081"
-#     environment:
-#       ME_CONFIG_MONGODB_SERVER: mongo
-#       ME_CONFIG_MONGODB_PORT: 27017
-#       ME_CONFIG_BASICAUTH_USERNAME: admin
-#       ME_CONFIG_BASICAUTH_PASSWORD: admin
-#     depends_on:
-#       - mongo
-#     networks:
-#       - appnet
-
-#   backend:
-#     build:
-#       context: ./backend
-#     container_name: expensetracker-backend
-#     ports:
-#       - "8099:8099"
-#     environment:
-#       - MONGO_HOST=mongo
-#       - MONGO_PORT=27017
-#     depends_on:
-#       - mongo
-#     networks:
-#       - appnet
-
-#   frontend:
-#     build:
-#       context: ./frontend
-#     container_name: expensetracker-frontend
-#     ports:
-#       - "3000:3000"
-#     depends_on:
-#       - backend
-#     networks:
-#       - appnet
-
-# networks:
-#   appnet:
-#     driver: bridge
-
-
-
-# version: '3.8'
-# services:
-#   mongo:
-#     image: mongo
-#     container_name: mongo
-#     ports:
-#       - "27017:27017"
-
-#   backend:
-#     build: ./backend
-#     container_name: backend
-#     ports:
-#       - "5000:5000"
-#     environment:
-#       - MONGODB_URI=mongodb://mongo:27017/expensetracker
-#     depends_on:
-#       - mongo
-
-#   frontend:
-#     build: ./frontend
-#     container_name: frontend
-#     ports:
-#       - "3000:3000"
-#     depends_on:
-#       - backend
-
-
 version: '3.8'
+
 services:
   mongo:
-    image: mongo
-    container_name: mongo
+    image: mongo:6.0
+    container_name: expensetracker-mongo
     ports:
       - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - appnet
     healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017 --quiet
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - app-network
 
-  backend:
-    build: ./backend
-    container_name: backend
+  mongo-express:
+    image: mongo-express:1.0
+    container_name: expensetracker-mongo-express
     ports:
-      - "8099:8099"
+      - "8081:8081"
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/expensetracker
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
     depends_on:
       mongo:
         condition: service_healthy
     networks:
-      - app-network
+      - appnet
+
+  backend:
+    build:
+      context: ./backend
+    container_name: expensetracker-backend
+    ports:
+      - "8099:8099"
+    environment:
+      MONGO_URI: "mongodb://admin:admin@mongo:27017/expense-tracker?authSource=admin"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - appnet
 
   frontend:
-    build: ./frontend
-    container_name: frontend
+    build:
+      context: ./frontend
+    container_name: expensetracker-frontend
     ports:
-      - "3000:3000"
+      - "3099:80"  # Changed to match Nginx port
     environment:
-      - REACT_APP_API_URL=http://backend:5000
+      - REACT_APP_API_URL=http://localhost:8099
     depends_on:
       - backend
     networks:
-      - app-network
+      - appnet
 
 networks:
-  app-network:
+  appnet:
     driver: bridge
+
+volumes:
+  mongodb_data:
