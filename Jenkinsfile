@@ -67,23 +67,32 @@ pipeline {
             steps {
                 bat "docker push %BACKEND_IMAGE%"
                 bat "docker push %FRONTEND_IMAGE%"
+
+                REM Tag and push latest for convenience
+                bat "docker tag %BACKEND_IMAGE% ramana2003/expense-tracker-backend:latest"
+                bat "docker push ramana2003/expense-tracker-backend:latest"
+                bat "docker tag %FRONTEND_IMAGE% ramana2003/expense-tracker-frontend:latest"
+                bat "docker push ramana2003/expense-tracker-frontend:latest"
             }
         }
 
-        stage('Stop Old Container') {
+        stage('Stop Old Containers') {
             steps {
-                bat 'docker stop finance-tracker || exit 0'
-                bat 'docker rm finance-tracker || exit 0'
+                bat 'docker stop expense-tracker-backend || exit 0'
+                bat 'docker rm expense-tracker-backend || exit 0'
+                bat 'docker stop expense-tracker-frontend || exit 0'
+                bat 'docker rm expense-tracker-frontend || exit 0'
             }
         }
 
-        stage('Run New Container') {
+        stage('Run New Containers') {
             steps {
-                bat "docker run -d -p 3099:80 --name finance-tracker ramana2003/expense-tracker-frontend:latest"
+                bat "docker run -d -p 8099:5000 --name expense-tracker-backend ramana2003/expense-tracker-backend:%BUILD_NUMBER%"
+                bat "docker run -d -p 3099:80 --name expense-tracker-frontend ramana2003/expense-tracker-frontend:%BUILD_NUMBER%"
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy with Compose') {
             steps {
                 bat "set TAG=%BUILD_NUMBER% && docker-compose -f docker-compose.prod.yml up -d"
             }
