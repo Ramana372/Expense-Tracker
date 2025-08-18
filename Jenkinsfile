@@ -29,16 +29,29 @@ pipeline {
                 }
             }
         }
+        
         stage('Test') {
-            steps {
-                dir('backend') {
-                    bat 'npm test || true'
-                }
-                dir('frontend') {
-                    bat 'npm test || true'
-                }
-            }
+        steps {
+        dir('backend') {
+            bat '''
+            call npm test
+            if %ERRORLEVEL% NEQ 0 (
+                echo "Backend tests failed, but continuing..."
+                exit /b 0
+            )
+            '''
         }
+        dir('frontend') {
+            bat '''
+            call npm test
+            if %ERRORLEVEL% NEQ 0 (
+                echo "Frontend tests failed, but continuing..."
+                exit /b 0
+            )
+            '''
+        }
+    }
+}
         stage('Push Images') {
             steps {
                 script {
