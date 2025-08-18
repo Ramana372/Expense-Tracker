@@ -32,10 +32,10 @@ pipeline {
         stage('Test') {
             steps {
                 dir('backend') {
-                    sh 'npm test || true'
+                    bat 'npm test || true'
                 }
                 dir('frontend') {
-                    sh 'npm test || true'
+                    bat 'npm test || true'
                 }
             }
         }
@@ -51,7 +51,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'TAG=${BUILD_NUMBER} docker-compose -f docker-compose.prod.yml up -d'
+                bat 'TAG=${BUILD_NUMBER} docker-compose -f docker-compose.prod.yml up -d'
             }
         }
     }
