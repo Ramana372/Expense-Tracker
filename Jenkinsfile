@@ -31,7 +31,11 @@ pipeline {
                 }
             }
         }
-
+        stage('Run MongoDB') {
+    steps {
+        bat "docker run -d -p 27017:27017 --name mongo mongo:latest"
+    }
+    }
         stage('Test') {
             steps {
                 dir('backend') {
@@ -83,12 +87,13 @@ pipeline {
             }
         }
 
-        stage('Run New Containers') {
-            steps {
-                bat "docker run -d -p 8099:5000 --name expense-tracker-backend ramana2003/expense-tracker-backend:%BUILD_NUMBER%"
-                bat "docker run -d -p 3099:80 --name expense-tracker-frontend ramana2003/expense-tracker-frontend:%BUILD_NUMBER%"
-            }
-        }
+stage('Run New Containers') {
+    steps {
+        bat "docker run -d -p 8099:5000 --name expense-tracker-backend --link mongo:mongo -e MONGO_URI=mongodb://mongo:27017/myData ramana2003/expense-tracker-backend:%BUILD_NUMBER%"
+        bat "docker run -d -p 3099:80 --name expense-tracker-frontend -e REACT_APP_API_URL=http://localhost:8099/api ramana2003/expense-tracker-frontend:%BUILD_NUMBER%"
+    }
+}
+
 
         stage('Deploy with Compose') {
             steps {
