@@ -92,7 +92,7 @@ pipeline {
 
         stage('Deploy with Compose') {
             steps {
-                bat "set TAG=%BUILD_NUMBER% && docker-compose -f docker-compose.prod.yml up -d"
+                echo 'Deployment step placeholder - customize based on target platform'
             }
         }
     }
