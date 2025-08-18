@@ -55,14 +55,18 @@ pipeline {
             }
         }
 
-        stage('Push Images') {
+        stage('Login to Docker Hub') {
             steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-                        docker.image(env.BACKEND_IMAGE).push()
-                        docker.image(env.FRONTEND_IMAGE).push()
-                    }
-                }
+                bat '''
+                echo|set /p=%DOCKERHUB_CREDENTIALS_PSW%|docker login -u %DOCKERHUB_CREDENTIALS_USR% --password-stdin
+                '''
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                bat "docker push %BACKEND_IMAGE%"
+                bat "docker push %FRONTEND_IMAGE%"
             }
         }
 
