@@ -67,8 +67,6 @@ pipeline {
             steps {
                 bat "docker push %BACKEND_IMAGE%"
                 bat "docker push %FRONTEND_IMAGE%"
-
-                REM Tag and push latest for convenience
                 bat "docker tag %BACKEND_IMAGE% ramana2003/expense-tracker-backend:latest"
                 bat "docker push ramana2003/expense-tracker-backend:latest"
                 bat "docker tag %FRONTEND_IMAGE% ramana2003/expense-tracker-frontend:latest"
