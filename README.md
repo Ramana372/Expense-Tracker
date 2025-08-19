@@ -13,7 +13,7 @@ Expense Tracker is a comprehensive tool for managing personal finances, built wi
 ### 🔑 Key Achievements
 - Developed secure JWT-based authentication for user management.
 - Implemented CRUD operations for income and expense tracking.
-- Created a responsive React frontend with Redux for efficient state management.
+- Created a responsive frontend with react for efficient state management.
 - Containerized the application with Docker for consistent environments.
 - Automated build, test, and deployment processes using Jenkins CI/CD.
 
@@ -28,16 +28,13 @@ Expense Tracker is a comprehensive tool for managing personal finances, built wi
 - **RESTful API**: Powered by Node.js and Express for efficient data handling.
 - **Data Persistence**: MongoDB with Mongoose for reliable storage.
 
-![Income Page](images/income.png)
-![Expenses Page](images/expenses.png)
-
 ---
 
 ## 🛠 Tech Stack
 
 | Layer      | Technologies Used                          |
 |------------|--------------------------------------------|
-| Frontend   | React.js, Redux, Axios                     |
+| Frontend   | React.js, Axios                     |
 | Backend    | Node.js, Express.js, MongoDB, Mongoose     |
 | DevOps     | Git, Docker, Jenkins                       |
 
@@ -54,7 +51,7 @@ Expense Tracker is a comprehensive tool for managing personal finances, built wi
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/expense-tracker.git
+git clone https://github.com/Ramana372/Expense-Tracker.git
 cd expense-tracker
 ```
 
@@ -66,14 +63,15 @@ npm install
 
 Create a `.env` file in the `backend/` directory:
 ```env
-MONGO_URI=your_mongodb_connection_string
+MONGO_URI=mongodb://mongo:27017/database name
 JWT_SECRET=your_secret_key
 PORT=5000
 ```
 
 Start the backend server:
 ```bash
-npm run dev
+npm run dev or
+node server.js
 ```
 
 ### Frontend Setup
@@ -99,7 +97,7 @@ Frontend runs at `http://localhost:3000` and communicates with backend at `http:
 ## ⚙️ DevOps Integration
 
 - **Git**: Version control for collaborative development  
-  Repository: [GitHub](https://github.com/your-username/expense-tracker)
+  Repository: [GitHub](https://github.com/Ramana372/Expense-Tracker.git)
 
 - **Docker**: Containerized deployment
   ```bash
@@ -111,28 +109,6 @@ Frontend runs at `http://localhost:3000` and communicates with backend at `http:
 
 ---
 
-## 📁 Folder Structure
-
-```
-expense-tracker/
-├── backend/
-│   ├── models/               # Mongoose schemas
-│   ├── routes/               # API routes
-│   ├── controllers/          # Business logic
-│   └── server.js             # Backend entry point
-├── frontend/
-│   ├── src/
-│   │   ├── components/       # Reusable UI components
-│   │   ├── pages/            # Page components
-│   │   ├── redux/            # State management
-│   │   └── App.js            # Frontend entry point
-├── docker-compose.yml        # Multi-container Docker config
-├── Dockerfile                # Docker setup
-└── README.md                 # Project documentation
-```
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome!  
@@ -141,13 +117,13 @@ To contribute:
 ```bash
 # Fork the repository
 # Create a new branch
-git checkout -b feature/your-feature-name
+git checkout -b branch-name
 
 # Make changes and commit
 git commit -m "Add your feature description"
 
 # Push to your branch
-git push origin feature/your-feature-name
+git push origin branch name
 ```
 
 Then, open a Pull Request on GitHub. Please follow coding standards and include tests for new features.
@@ -158,21 +134,16 @@ Then, open a Pull Request on GitHub. Please follow coding standards and include 
 
 - **Dashboard**: Financial overview and savings
 - **Income Page**: Manage income entries
+- ![Income Page](images/income.png)
 - **Expenses Page**: Track and categorize expenses
+- ![Expenses Page](images/expenses.png)
 - **Savings Overview**: Visualize savings progress
+- ![Expenses Page](images/savings.png)
 - **Docker Execution**: Containerized deployment in action
+- ![Expenses Page](images/execution.png)
 
 ---
 
-## 🧠 Languages Used
-
-| Language     | Usage (%) |
-|--------------|-----------|
-| JavaScript   | 86.7%     |
-| CSS          | 11.1%     |
-| HTML         | 2.2%      |
-
----
 
 ## 📚 Resources
 
@@ -184,16 +155,10 @@ Then, open a Pull Request on GitHub. Please follow coding standards and include 
 
 ---
 
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
 ## 📬 Contact
 
 For questions or feedback, create a GitHub Issue or contact the maintainer at:  
-📧 `your-email@example.com`
+📧 `your-sadhanalavenkat372@gmail.com`
 
 ---
 
