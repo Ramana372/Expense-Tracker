@@ -27,6 +27,9 @@ Expense Tracker is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) ap
 - Docker (optional for containerized deployment)
 - Jenkins (optional for CI/CD)
 
+
+![Expense Tracker income page](images/income.png)
+![Expense Tracker expenses](images/expenses.png)
 ### Clone the Repository
 bash
 git clone https://github.com/your-username/expense-tracker.git
@@ -78,7 +81,7 @@ docker run -p 5000:5000 expense-tracker
 
 Jenkins CI/CD: Automates building, testing, and deployment on code changes.
 
-
+![Expense Tracker savings](images/savings.png)
 Folder Structure
 expense-tracker/
 ├── backend/          # Node.js + Express API
@@ -125,6 +128,6 @@ React Documentation
 Node.js Documentation
 Docker Documentation
 Jenkins Documentation
-
+![Expense Tracker Docker-Execution](images/execution.png)
 License
 This project is licensed under the MIT License.```
