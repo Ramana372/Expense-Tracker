@@ -1,34 +1,35 @@
-version: '3.8'
+version: '3.9'
+
 services:
   mongo:
-    image: mongo:latest
+    image: mongo:7
+    container_name: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    environment:
-      - MONGO_INITDB_DATABASE=myData
 
   backend:
     build: ./backend
+    container_name: backend
     ports:
       - "8099:8099"
+    environment:
+      - PORT=8099
+      - MONGO_URI=mongodb://mongo:27017/mydata
+      - JWT_SECRET=mysecretkey
     depends_on:
       - mongo
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/myData
-      - NODE_ENV=development
 
   frontend:
     build: ./frontend
+    container_name: frontend
     ports:
       - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://backend:8099
     depends_on:
       - backend
-    environment:
-      - NODE_ENV=development
-      - REACT_APP_API_URL=http://backend:8099/api
-    volumes:
-      - ./frontend/src:/app/src
+
 volumes:
   mongo-data:

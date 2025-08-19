@@ -1,28 +1,23 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8099/api';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
 });
+export const registerUser = (userData) => api.post('/api/register', userData);
 
-export const registerUser = (userData) => {
-  return api.post('/register', userData);
-};
-
-export const loginUser = (credentials) => {
-  return api.post('/login', credentials);
-};
+export const loginUser = (credentials) => api.post('/api/login', credentials);
 
 export const getTransactions = () => {
-  return api.get('/transactions');
+  const token = localStorage.getItem('token');
+  return api.get('/api/transactions', { headers: { Authorization: `Bearer ${token}` } });
 };
 
 export const addTransaction = (transaction) => {
-  return api.post('/transactions', transaction);
+  const token = localStorage.getItem('token');
+  return api.post('/api/transactions', transaction, { headers: { Authorization: `Bearer ${token}` } });
 };
 
 export default api;
