@@ -134,13 +134,13 @@ Then, open a Pull Request on GitHub. Please follow coding standards and include 
 
 - **Dashboard**: Financial overview and savings
 - **Income Page**: Manage income entries
-- ![Income Page](images/income.png)
+ ![Income Page](images/income.png)
 - **Expenses Page**: Track and categorize expenses
-- ![Expenses Page](images/expenses.png)
+ ![Expenses Page](images/expenses.png)
 - **Savings Overview**: Visualize savings progress
-- ![Expenses Page](images/savings.png)
+ ![Expenses Page](images/savings.png)
 - **Docker Execution**: Containerized deployment in action
-- ![Expenses Page](images/execution.png)
+ ![Expenses Page](images/execution.png)
 
 ---
 
