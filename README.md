@@ -51,7 +51,7 @@ Key achievements in this project include:
 - Git
 
 ### Clone the Repository
-```bash
+bash
 git clone https://github.com/your-username/expense-tracker.git
 cd expense-tracker
 
